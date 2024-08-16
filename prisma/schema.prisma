@@ -18,7 +18,7 @@ model User {
   createdAt DateTime  @default(now())
   username  String    @unique
   password  String
-  Product   Product[] //establishment of the relation 
+  products  Product[] //establishment of the relation 
 }
 
 model Product {
@@ -29,6 +29,7 @@ model Product {
   belongsToId String
   belongsTo   User     @relation(fields: [belongsToId], references: [id]) //the belongsto is the field on the product holding the relation to the id feild in the user model 
   updates     Update[]
+  @@index([id ,belongsToId])
 }
 
 enum UPDATE_STATUS {
@@ -40,7 +41,7 @@ enum UPDATE_STATUS {
 model Update {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 
   title   String
   body    String
